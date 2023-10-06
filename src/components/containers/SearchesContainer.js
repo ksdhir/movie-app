@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { getMovies, searchMovies } from '../../services/service.js';
+import { useState } from 'react';
+import { searchMovies } from '../../services/service.js';
 import { View, Text } from 'react-native';
 import List from '../listItems/List.js';
 import { Button } from '@rneui/themed';
-import { AntDesign } from '@expo/vector-icons';
 
 import BtnBottomSheets from '../common/BtnBottomSheets.js';
 import Loading from '../common/Loading.js';

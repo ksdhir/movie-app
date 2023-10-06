@@ -3,17 +3,27 @@ import { getMovies } from '../../services/service.js';
 import { View, Text } from 'react-native';
 import List from '../listItems/List.js';
 
+import BtnBottomSheets from '../common/BtnBottomSheets.js';
+import Loading from '../common/Loading.js';
+
 const MoviesContainer = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    getMovies().then((data) => {
-      //   console.log(data.results[0]);
-      //   console.log(data.results[0].title);
-      //   console.log(data.results[0].release_date);
-      //   console.log(data.results[0].popularity);
-      //   console.log(data.results[0].poster_path);
+    filterMovies('popular');
+  }, []);
 
+  function updateSelectedType(item) {
+    filterMovies(item);
+  }
+
+  function filterMovies(movieType) {
+    // loading on
+
+    setIsLoading(true);
+
+    getMovies(movieType).then((data) => {
       const filteredItems = data.results.map((item) => {
         return {
           id: item.id,
@@ -25,16 +35,50 @@ const MoviesContainer = ({ navigation }) => {
       });
 
       setMovies(filteredItems);
-      console.log(filteredItems[0]);
+      // loading off
+      setIsLoading(false);
     });
-  }, []);
+  }
 
   return (
     <View>
       {/* <Text h1>Movies List</Text> */}
-      {/*  */}
 
-      <List navigation={navigation} DATA={movies} />
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          marginTop: 20,
+        }}
+      >
+        <View
+          style={{
+            width: '70%',
+          }}
+        >
+          <BtnBottomSheets
+            sheetItems={[
+              { title: 'now_playing' },
+              { title: 'popular' },
+              { title: 'top_rated' },
+              { title: 'upcoming' },
+            ]}
+            defaultItem={'popular'}
+            onSelected={(item) => updateSelectedType(item)}
+          />
+        </View>
+      </View>
+
+      {isLoading && <Loading />}
+
+      {!isLoading && (
+        <View>
+          <List navigation={navigation} DATA={movies} />
+        </View>
+      )}
     </View>
   );
 };
