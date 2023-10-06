@@ -4,6 +4,7 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
 
 const BtnBottomSheets = ({
+  isError,
   sheetItems,
   defaultItem,
   onSelected = () => [],
@@ -26,7 +27,7 @@ const BtnBottomSheets = ({
         buttonStyle={{
           backgroundColor: 'white',
           borderRadius: 3,
-          borderColor: 'black',
+          borderColor: isError ? 'red' : 'black',
           borderWidth: 1,
         }}
         containerStyle={{

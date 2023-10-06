@@ -11,6 +11,8 @@ import Loading from '../common/Loading.js';
 import { SearchBar } from '@rneui/themed';
 
 const SearchesContainer = ({ navigation }) => {
+  const [isError, setIsError] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
 
@@ -30,18 +32,16 @@ const SearchesContainer = ({ navigation }) => {
   function searchNow() {
     // validate if search exists and is not empty
     if (search.length && search !== ' ') {
-      
+      setIsError(false);
       setIsLoading(true);
       setIsSearchClicked(true);
 
       searchMovies(movieType.toLowerCase(), search).then((data) => {
         setMovies(data.results);
-        setIsLoading(false)
+        setIsLoading(false);
       });
-
-
-
-
+    } else {
+      setIsError(true);
     }
   }
 
@@ -73,19 +73,22 @@ const SearchesContainer = ({ navigation }) => {
         <View
           style={{
             width: '100%',
-            paddingLeft: 24,
-            paddingRight: 24,
+            paddingLeft: 32,
+            paddingRight: 32,
             marginBottom: 16,
           }}
         >
           <SearchBar
             containerStyle={{
               backgroundColor: 'transparent',
-              borderWidth: 0,
+              borderWidth: isError ? 1 : 0,
               border: 'none',
               outline: 'none',
-              borderTopColor: 'transparent',
-              borderBottomColor: 'transparent',
+              borderTopColor: isError ? 'red' : 'transparent',
+              borderBottomColor: isError ? 'red' : 'transparent',
+              borderColor: 'red',
+              padding: 0,
+              borderRadius: isError ? 4 : 0,
             }}
             placeholder="i.e James Bond, CSI"
             onChangeText={(text) => updateSearch(text)}
@@ -131,6 +134,7 @@ const SearchesContainer = ({ navigation }) => {
               ]}
               defaultItem={'Multi'}
               onSelected={(item) => updateSelectedType(item)}
+              isError={isError}
             />
           </View>
 
@@ -143,6 +147,23 @@ const SearchesContainer = ({ navigation }) => {
               }}
             />
           </View>
+        </View>
+
+        <View
+          style={{
+            display: isError ? 'block' : 'none',
+            alignSelf: 'left',
+            paddingLeft: 32,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+              color: 'red',
+            }}
+          >
+            Movie/TV Show Name is required
+          </Text>
         </View>
       </View>
 
