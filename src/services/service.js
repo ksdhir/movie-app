@@ -20,4 +20,24 @@ const getMovies = async (type = 'now_playing') => {
   return data;
 };
 
-export { getMovies };
+const searchMovies = async (type = 'multi') => {
+  const headers = {
+    accept: 'application/json',
+    Authorization: `Bearer ${APP_KEY}`,
+  };
+
+  const response = await fetch(
+    `${BASE_URL}/search/${type}?language=en-US&page=1`,
+    {
+      method: 'GET',
+      headers,
+    }
+  );
+
+  console.log(`${BASE_URL}/movies/${type}`);
+
+  const data = await response.json();
+  return data;
+};
+
+export { getMovies, searchMovies };

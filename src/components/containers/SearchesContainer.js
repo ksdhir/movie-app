@@ -57,29 +57,46 @@ const SearchesContainer = ({ navigation }) => {
           width: '100%',
         }}
       >
-        <Text>Search Movie/TV Show Name</Text>
-        <SearchBar
-          containerStyle={{
-            backgroundColor: 'transparent',
-            borderWidth: 0,
-            border: 'none',
-            outline: 'none',
-            width: '70%',
-            borderTopColor: 'transparent',
-            borderBottomColor: 'transparent',
+        <Text
+          style={{
+            alignSelf: 'flex-start',
+            paddingLeft: 32,
+            paddingRight: 32,
           }}
-          placeholder="i.e James Bond, CSI"
-          onChangeText={this.updateSearch}
-          value={search}
-        />
-        <Text>Choose Search Type</Text>
+        >
+          Search Movie/TV Show Name
+        </Text>
+        <View style={{ width: '100%', paddingLeft: 24, paddingRight: 24, marginBottom: 16 }}>
+          <SearchBar
+            containerStyle={{
+              backgroundColor: 'transparent',
+              borderWidth: 0,
+              border: 'none',
+              outline: 'none',
+              borderTopColor: 'transparent',
+              borderBottomColor: 'transparent',
+            }}
+            placeholder="i.e James Bond, CSI"
+            onChangeText={this.updateSearch}
+            value={search}
+          />
+        </View>
+        <Text
+          style={{
+            alignSelf: 'flex-start',
+            paddingLeft: 32,
+            paddingRight: 32,
+          }}
+        >
+          Choose Search Type
+        </Text>
         <View
           style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            marginTop: 20,
-            marginBottom: 20,
+            marginTop: 8,
+            marginBottom: 8,
             textAlign: 'center',
             width: '100%',
             paddingLeft: 32,
