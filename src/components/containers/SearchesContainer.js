@@ -1,53 +1,50 @@
 import { useEffect, useState } from 'react';
-import { getMovies } from '../../services/service.js';
+import { getMovies, searchMovies } from '../../services/service.js';
 import { View, Text } from 'react-native';
 import List from '../listItems/List.js';
-import { Button } from '@rneui/themed';             
+import { Button } from '@rneui/themed';
 import { AntDesign } from '@expo/vector-icons';
 
 import BtnBottomSheets from '../common/BtnBottomSheets.js';
+import Loading from '../common/Loading.js';
 
 // import { SearchBar } from 'react-native-elements';
 import { SearchBar } from '@rneui/themed';
 
 const SearchesContainer = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSearchClicked, setIsSearchClicked] = useState(false);
+
   const [search, setSearch] = useState('');
+  const [movieType, setMovieType] = useState('Multi');
+
   const [movies, setMovies] = useState([]);
 
   const updateSearch = (search) => {
     setSearch(search);
   };
 
-  useEffect(() => {
-    getMovies().then((data) => {
-      //   console.log(data.results[0]);
-      //   console.log(data.results[0].title);
-      //   console.log(data.results[0].release_date);
-      //   console.log(data.results[0].popularity);
-      //   console.log(data.results[0].poster_path);
+  function updateSelectedType(item) {
+    setMovieType(item);
+  }
 
-      const filteredItems = data.results.map((item) => {
-        return {
-          id: item.id,
-          title: item.title,
-          release_date: item.release_date,
-          popularity: item.popularity,
-          poster_path: item.poster_path,
-        };
+  function searchNow() {
+    // validate if search exists and is not empty
+    if (search.length && search !== ' ') {
+      
+      setIsLoading(true);
+      setIsSearchClicked(true);
+
+      searchMovies(movieType.toLowerCase(), search).then((data) => {
+        setMovies(data.results);
+        setIsLoading(false)
       });
 
-      setMovies(filteredItems);
-      console.log(filteredItems[0]);
-    });
-  }, []);
 
 
 
-  function updateSelectedType(item) {
-    // setSearch(item);
-
-
-  };
+    }
+  }
 
   return (
     <View>
@@ -74,7 +71,14 @@ const SearchesContainer = ({ navigation }) => {
         >
           Search Movie/TV Show Name
         </Text>
-        <View style={{ width: '100%', paddingLeft: 24, paddingRight: 24, marginBottom: 16 }}>
+        <View
+          style={{
+            width: '100%',
+            paddingLeft: 24,
+            paddingRight: 24,
+            marginBottom: 16,
+          }}
+        >
           <SearchBar
             containerStyle={{
               backgroundColor: 'transparent',
@@ -85,7 +89,7 @@ const SearchesContainer = ({ navigation }) => {
               borderBottomColor: 'transparent',
             }}
             placeholder="i.e James Bond, CSI"
-            onChangeText={this.updateSearch}
+            onChangeText={(text) => updateSearch(text)}
             value={search}
           />
         </View>
@@ -120,17 +124,20 @@ const SearchesContainer = ({ navigation }) => {
               flex: 1,
             }}
           >
-            
             <BtnBottomSheets
-              sheetItems={[{ title: 'Multi' }, { title: 'Movie' },{ title: 'TV' }]}
-              defaultItem={"Multi"}
+              sheetItems={[
+                { title: 'Multi' },
+                { title: 'Movie' },
+                { title: 'TV' },
+              ]}
+              defaultItem={'Multi'}
               onSelected={(item) => updateSelectedType(item)}
             />
-           
           </View>
 
           <View>
             <Button
+              onPress={() => searchNow()}
               title={'Search'}
               containerStyle={{
                 height: 40,
@@ -140,9 +147,31 @@ const SearchesContainer = ({ navigation }) => {
         </View>
       </View>
 
+      {/* Default State message */}
+
+      {!isSearchClicked && (
+        <>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 24,
+              fontWeight: 'bold',
+              color: 'gray',
+              marginTop: 64,
+            }}
+          >
+            Please initiate a search
+          </Text>
+        </>
+      )}
+
       {/* Search Results */}
 
-      <List navigation={navigation} DATA={movies} />
+      {isLoading && <Loading />}
+
+      {!isLoading && movies.length > 0 && (
+        <List navigation={navigation} DATA={movies} />
+      )}
     </View>
   );
 };
