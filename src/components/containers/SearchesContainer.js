@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import { getMovies } from '../../services/service.js';
 import { View, Text } from 'react-native';
 import List from '../listItems/List.js';
-import { Button } from '@rneui/themed';
+import { Button } from '@rneui/themed';             
 import { AntDesign } from '@expo/vector-icons';
 
-// import { SearchBar } from 'react-native-elements';
+import BtnBottomSheets from '../common/BtnBottomSheets.js';
 
-import { TabView } from '@rneui/base';
+// import { SearchBar } from 'react-native-elements';
 import { SearchBar } from '@rneui/themed';
 
 const SearchesContainer = ({ navigation }) => {
   const [search, setSearch] = useState('');
   const [movies, setMovies] = useState([]);
 
-  updateSearch = (search) => {
+  const updateSearch = (search) => {
     setSearch(search);
   };
 
@@ -40,6 +40,14 @@ const SearchesContainer = ({ navigation }) => {
       console.log(filteredItems[0]);
     });
   }, []);
+
+
+
+  function updateSelectedType(item) {
+    // setSearch(item);
+
+
+  };
 
   return (
     <View>
@@ -112,37 +120,13 @@ const SearchesContainer = ({ navigation }) => {
               flex: 1,
             }}
           >
-            <Button
-              buttonStyle={{
-                backgroundColor: 'white',
-                borderRadius: 3,
-                borderColor: 'black',
-                borderWidth: 1,
-              }}
-              containerStyle={{
-                height: 40,
-              }}
-              titleStyle={{ color: 'black' }}
-            >
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                  }}
-                >
-                  Multi
-                </Text>
-                <AntDesign name="down" size={16} color="black" />
-              </View>
-            </Button>
+            
+            <BtnBottomSheets
+              sheetItems={[{ title: 'Multi' }, { title: 'Movie' },{ title: 'TV' }]}
+              defaultItem={"Multi"}
+              onSelected={(item) => updateSelectedType(item)}
+            />
+           
           </View>
 
           <View>
