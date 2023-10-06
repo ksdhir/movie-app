@@ -62,9 +62,20 @@ const BtnBottomSheets = ({
             paddingLeft: 16,
             paddingRight: 16,
             paddingBottom: 16,
-            paddingTop: 16,
           }}
         >
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+          }}>
+            <AntDesign name="minus" size={48} color="gray" />
+          </View>
+          
+
           {sheetItems.map((l, i) => (
             <ListItem
               key={i}
