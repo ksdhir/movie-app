@@ -1,8 +1,9 @@
-import { View, Text } from "react-native";
-import MoviesContainer from "../containers/MoviesContainer.js";
-import { Tab } from "@rneui/themed";
-import { TabView } from "@rneui/base";
-import { useState } from "react";
+import { View, Text } from 'react-native';
+import MoviesContainer from '../containers/MoviesContainer.js';
+import SearchesContainer from '../containers/SearchesContainer.js';
+import { Tab } from '@rneui/themed';
+import { TabView } from '@rneui/base';
+import { useState } from 'react';
 
 const IndexScreen = ({ navigation }) => {
   const [tabIndex, setIndex] = useState(0);
@@ -13,14 +14,14 @@ const IndexScreen = ({ navigation }) => {
         value={tabIndex}
         onChange={(e) => setIndex(e)}
         indicatorStyle={{
-          backgroundColor: "black",
+          backgroundColor: 'black',
           height: 3,
         }}
       >
         <Tab.Item
           title="Movies"
           titleStyle={{
-            color: tabIndex === 0 ? "black" : "gray",
+            color: tabIndex === 0 ? 'black' : 'gray',
             fontSize: 12,
           }}
         />
@@ -28,7 +29,7 @@ const IndexScreen = ({ navigation }) => {
         <Tab.Item
           title="Search Results"
           titleStyle={{
-            color: tabIndex === 1 ? "black" : "gray",
+            color: tabIndex === 1 ? 'black' : 'gray',
             fontSize: 12,
           }}
         />
@@ -36,7 +37,7 @@ const IndexScreen = ({ navigation }) => {
         <Tab.Item
           title="TV Shows"
           titleStyle={{
-            color: tabIndex === 2 ? "black" : "gray",
+            color: tabIndex === 2 ? 'black' : 'gray',
             fontSize: 12,
           }}
         />
@@ -45,19 +46,21 @@ const IndexScreen = ({ navigation }) => {
       <TabView value={tabIndex} onChange={setIndex}>
         <TabView.Item
           style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-        <MoviesContainer navigation={navigation} />
+          <MoviesContainer navigation={navigation} />
         </TabView.Item>
 
-        <TabView.Item style={{ backgroundColor: "blue", width: "100%" }}>
-          <Text h1>Searchesd</Text>
+        <TabView.Item  style={{
+          width: '100%'
+          }}>
+          <SearchesContainer navigation={navigation} />
         </TabView.Item>
 
-        <TabView.Item style={{ backgroundColor: "green", width: "100%" }}>
+        <TabView.Item style={{ backgroundColor: 'green', width: '100%' }}>
           <Text h1>Cart</Text>
         </TabView.Item>
       </TabView>
