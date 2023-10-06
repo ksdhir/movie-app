@@ -37,7 +37,20 @@ const SearchesContainer = ({ navigation }) => {
       setIsSearchClicked(true);
 
       searchMovies(movieType.toLowerCase(), search).then((data) => {
-        setMovies(data.results);
+
+
+        const filteredItems = data.results.map((item) => {
+          return {
+            id: item.id,
+            title: item.title ?? item.name,
+            release_date: item.release_date ?? item.first_air_date,
+            popularity: item.popularity,
+            poster_path: item.poster_path,
+          };
+        });
+
+
+        setMovies(filteredItems);
         setIsLoading(false);
       });
     } else {
