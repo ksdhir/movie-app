@@ -69,6 +69,9 @@ const SearchesContainer = ({ navigation }) => {
           }}
         >
           Search Movie/TV Show Name
+          <Text style={{color: "red"}}>
+            *
+          </Text>
         </Text>
         <View
           style={{
@@ -103,6 +106,9 @@ const SearchesContainer = ({ navigation }) => {
           }}
         >
           Choose Search Type
+          <Text style={{color: "red"}}>
+            *
+          </Text>
         </Text>
         <View
           style={{
@@ -149,6 +155,7 @@ const SearchesContainer = ({ navigation }) => {
           </View>
         </View>
 
+        {/* Error Message */}
         <View
           style={{
             display: isError ? 'block' : 'none',
@@ -165,6 +172,25 @@ const SearchesContainer = ({ navigation }) => {
             Movie/TV Show Name is required
           </Text>
         </View>
+
+        {/* Normal Message */}
+
+        <View
+          style={{
+            display: !isError ? 'block' : 'none',
+            alignSelf: 'left',
+            paddingLeft: 32,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 14,
+            }}
+          >
+            Please select a search type
+          </Text>
+        </View>
+
       </View>
 
       {/* Default State message */}
