@@ -2,7 +2,7 @@ import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import Loading from '../common/Loading.js';
 import { getFilmDetail } from '../../services/service.js';
-import { Image } from "@rneui/themed";
+import { Image } from '@rneui/themed';
 
 const ShowDetailsScreen = ({ navigation, route }) => {
   const { id, title, type } = route.params;
@@ -11,6 +11,12 @@ const ShowDetailsScreen = ({ navigation, route }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    //Update the title of the screen
+    navigation.setOptions({
+      title,
+      headerBackTitle: 'Back to Screen',
+    });
+
     // loading on
     setIsLoading(true);
 
@@ -20,12 +26,6 @@ const ShowDetailsScreen = ({ navigation, route }) => {
       setIsLoading(false);
     });
   }, []);
-
-  //Update the title of the screen
-  navigation.setOptions({
-    title,
-    headerBackTitle: 'Back to Screen',
-  });
 
   return (
     <View>
@@ -68,28 +68,26 @@ const ShowDetailsScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   scrollviewStyle: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     padding: 16,
-    height: "100%",
+    height: '100%',
     gap: 16,
-
   },
 
   imageContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 16,
   },
 
   detailsContainer: {
     paddingLeft: 22,
     width: 320,
-    marginRight: "auto",
-    marginLeft: "auto",
+    marginRight: 'auto',
+    marginLeft: 'auto',
   },
 });
-
 
 export default ShowDetailsScreen;
