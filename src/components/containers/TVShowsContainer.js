@@ -28,9 +28,10 @@ const TVShowsContainer = ({ navigation }) => {
         return {
           id: item.id,
           title: item.name,
-          release_date: item.release_date,
+          release_date: item.release_date ?? item.first_air_date,
           popularity: item.popularity,
           poster_path: item.poster_path,
+          isTV: true,
         };
       });
 

@@ -2,7 +2,6 @@ import { BASE_URL, APP_KEY } from '../config/apiConfig.js';
 
 const getMovies = async (filterBy = 'now_playing', type="movie") => {
 
-
   const headers = {
     accept: 'application/json',
     Authorization: `Bearer ${APP_KEY}`,
@@ -38,4 +37,28 @@ const searchMovies = async (type = 'multi', query) => {
   return data;
 };
 
-export { getMovies, searchMovies };
+
+// ===================> Get Film Detail <===================
+
+const getFilmDetail = async (id, type = "movie") => {
+
+  const headers = {
+    accept: 'application/json',
+    Authorization: `Bearer ${APP_KEY}`,
+  };
+
+  const response = await fetch(
+    `${BASE_URL}/${type}/${id}?language=en-US`,
+    {
+      method: 'GET',
+      headers,
+    }
+  );
+
+  const data = await response.json();
+  return data;
+
+}
+
+
+export { getMovies, searchMovies, getFilmDetail };

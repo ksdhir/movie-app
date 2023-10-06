@@ -35,6 +35,13 @@ const List = ({ navigation, DATA }) => {
           title="More Details"
           titleStyle={{ fontSize: 14 }}
           color="#31adcd"
+          onPress={() => {
+            navigation.navigate("show", {
+              id: item.id,
+              title: item.title ?? item.name,
+              type: item.isTV ? "tv" : "movie",
+            });
+          }}
         />
       </View>
     </View>
